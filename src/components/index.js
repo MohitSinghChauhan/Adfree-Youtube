@@ -7,4 +7,3 @@ export { default as Sidebar } from "./Sidebar";
 export { default as Videos } from "./Videos";
 export { default as ChannelCard } from "./ChannelCard";
 export { default as VideoCard } from "./VideoCard";
-export { default as Comments } from "./Comments";

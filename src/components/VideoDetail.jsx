@@ -2,7 +2,7 @@ import { CheckCircle } from "@mui/icons-material";
 import { Box, CardMedia, Stack, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
 
-import { Videos, Comments } from "./";
+import { Videos } from "./";
 import ReactPlayer from "react-player";
 import { Link, useParams } from "react-router-dom";
 import { demoProfilePicture } from "../utils/constants";
@@ -20,30 +20,34 @@ const VideoDetail = () => {
 	useEffect(() => {
 		fetchFromAPI(`videos?part=snippet,statistics&id=${id}`).then((data) => {
 			setVideoDetail(data.items[0]);
+			chanId = data.items[0].snippet.channelId;
 		});
 		fetchFromAPI(`search?part=snippet&relatedToVideoId=${id}&type=video`).then(
 			(data) => {
 				setVideos(data.items);
 			}
 		);
+		fetchFromAPI(
+			`commentThreads?part="snippet&videoId=${id}&maxResults=100`
+		).then((data) => {
+			setComments(data?.items);
+		});
+	}, [id]);
+	useEffect(() => {
 		fetchFromAPI(`channels?part="snippet,statistics&id=${chanId}`).then(
 			(data) => {
 				setChannelDetail(data?.items[0]);
 			}
 		);
-		fetchFromAPI(
-			`commentThreads?part="snippet&videoId=${chanId}&maxResults=100`
-		).then((data) => {
-			setComments(data?.items);
-		});
-	}, [id, chanId, channelDetail]);
+	}, [chanId]);
 	if (!videoDetail?.snippet) return "Loading";
 
 	const {
-		snippet: { title, channelId, channelTitle, description, thumbnails },
+		snippet: { title, channelId, channelTitle, description },
 		statistics: { viewCount, likeCount },
 	} = videoDetail;
-	chanId = channelId;
+	console.log(comments);
+
 	return (
 		<Box minHeight={"95vh"}>
 			<Stack
@@ -197,15 +201,75 @@ const VideoDetail = () => {
 									padding: { xs: "4px", md: "8px" },
 								}}
 							>
-								{` ${
-									!isCommentsShown ? (
-										"Comments..."
-									) : (
-										<Comments
-											comments={comments?.snippet?.topLevelComment?.snippet}
-										/>
-									)
-								}`}
+								{!isCommentsShown
+									? `Comments...`
+									: comments.map((item) => (
+											<Stack>
+												<Box display="flex" padding="4px">
+													<Stack>
+														<Box marginRight="6px">
+															<Link
+																to={`/channel/${channelId}`}
+																sx={{
+																	display: "flex",
+																	justifyContent: "center",
+																	alignItems: "center",
+																}}
+															>
+																<CardMedia
+																	image={
+																		item?.snippet?.topLevelComment?.snippet
+																			?.authorProfileImageUrl ||
+																		demoProfilePicture
+																	}
+																	alt={channelDetail?.snippet?.title}
+																	sx={{
+																		borderRadius: "50%",
+																		width: "64px",
+																		height: "64px",
+																		border: "2px solid #e3e3e3",
+																		display: "inline-block",
+																	}}
+																/>
+															</Link>
+														</Box>
+													</Stack>
+													<Stack
+														display="flex"
+														direction="column"
+														justifyContent="space-between"
+													>
+														<Box>
+															{
+																item?.snippet?.topLevelComment?.snippet
+																	?.authorDisplayName
+															}
+														</Box>
+														<Box>
+															{
+																item?.snippet?.topLevelComment?.snippet
+																	?.textDisplay
+															}
+														</Box>
+														<Stack
+															display="flex"
+															justifySelf="flex-end"
+															direction="row"
+														>
+															<Typography>👍 </Typography>
+															<Typography>
+																{
+																	item?.snippet?.topLevelComment?.snippet
+																		?.likeCount
+																}
+															</Typography>
+															<Typography> 👎 </Typography>
+															<Typography>reply</Typography>
+														</Stack>
+													</Stack>
+												</Box>
+											</Stack>
+									  ))}
 							</Typography>
 							{!isCommentsShown && (
 								<Typography
