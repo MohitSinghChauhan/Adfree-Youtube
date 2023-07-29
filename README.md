@@ -1,31 +1,56 @@
-# YouTube Clone
+# 📺 Ad-Free YouTube
 
-This is a YouTube clone built using React.js, Redux Toolkit, JavaScript, HTML, CSS, and Tailwind. The app fetches data from the YouTube API to display video cards and uses the real YouTube search suggestions API to display working search suggestions. It also features a nested comment section and uses Redux for state management.
+Ad-Free YouTube is a clone of YouTube built with React, Material UI, and the RapidAPI YouTube API that provides an ad-free video watching experience.
 
-## Installation
 
-1. Clone the repository to your local machine.
-2. Navigate to the project directory in your terminal.
-3. Create a `.env` file in the root of the project.
-4. Add the following line to your `.env` file: `REACT_APP_RAPID_API_KEY="<place-your-api-key>"`
-5. Install the necessary dependencies by running `npm install`.
-6. Start the development server by running `npm start`.
+## 🛠️ Key Features
 
-## Usage
+- Fetches real video data from the RapidAPI YouTube API to display video cards
+- Implements YouTube's autocomplete search with queried search suggestions
+- Displays video details including title, views, likes, description etc. 
+- Allows commenting on videos with nested reply functionality
+- Saves likes, comments and more in local state for seamless UX
+- Ad-free experience with no distractions from the core functionality
+- Responsive design that works well on all devices
 
-Once the development server is running, you can access the app by navigating to `http://localhost:3000` in your browser.
+## 🚀 Getting Started
 
-## Features
+1. Clone the repo
+```
+git clone https://github.com/MohitSinghChauhan/Adfree-Youtube.git
+```
 
-- Fetches data from the YouTube API to display video cards
-- Displays working search suggestions using the real YouTube search suggestions API
-- Implements a nested comment section
-- Uses Redux for state management
+2. Navigate to the directory 
+```
+cd Adfree-Youtube
+```
 
-## Contributing
+3. Install dependencies
+```
+npm install
+```
 
-Contributions are welcome! To contribute to this project, please fork the repository and submit a pull request.
+4. Add your RapidAPI key to `.env` file
+```
+REACT_APP_RAPID_API_KEY = "YOUR_API_KEY" 
+```
 
-## License
+5. Run the app
+```
+npm start
+```
 
-This project is licensed under the MIT License. See the `LICENSE` file for more information.
+## 🧰 Built With
+
+- [React](https://reactjs.org/)
+- [Material UI](https://mui.com/)
+- [RapidAPI YouTube API](https://rapidapi.com/ytdlfree/api/youtube-v31/)
+- [JavaScript](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
+
+## 🤝 Contributing
+
+Contributions are welcome! Please open an issue or submit a pull request if you would like to contribute.
+
+## 📝 License
+
+This project is licensed under MIT. See `LICENSE` for more details.
